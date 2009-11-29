@@ -1,0 +1,10 @@
+.git
+tags
+
+syntax: glob
+*.pyc
+*.swp
+.DS_Store
+
+syntax: regexp
+
