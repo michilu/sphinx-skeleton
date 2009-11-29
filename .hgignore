@@ -1,4 +1,6 @@
 .git
+orig
+skeleton/_build
 tags
 
 syntax: glob

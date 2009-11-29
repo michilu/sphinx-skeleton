@@ -1,0 +1,65 @@
+diff -r 4239ea044049 skeleton/Makefile
+--- a/skeleton/Makefile	Sun Nov 29 09:34:19 2009 +0900
++++ b/skeleton/Makefile	Sun Nov 29 09:59:31 2009 +0900
+@@ -12,7 +12,9 @@
+ PAPEROPT_letter = -D latex_paper_size=letter
+ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+ 
+-.PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest
++.PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest serve
++
++PORT  = 8000
+ 
+ help:
+ 	@echo "Please use \`make <target>' where <target> is one of"
+@@ -28,6 +30,7 @@
+ 	@echo "  changes   to make an overview of all changed/added/deprecated items"
+ 	@echo "  linkcheck to check all external links for integrity"
+ 	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
++	@echo "  serve     to run serving standalone HTML files, you can set PORT=8000 (default)"
+ 
+ clean:
+ 	-rm -rf $(BUILDDIR)/*
+@@ -104,3 +107,9 @@
+ 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
+ 	@echo "Testing of doctests in the sources finished, look at the " \
+ 	      "results in $(BUILDDIR)/doctest/output.txt."
++
++serve:
++	make html
++	@echo
++	@echo "Running Server..."
++	cd _build/html && python -m SimpleHTTPServer $(PORT)
+diff -r 4239ea044049 skeleton/conf.py
+--- a/skeleton/conf.py	Sun Nov 29 09:34:19 2009 +0900
++++ b/skeleton/conf.py	Sun Nov 29 09:59:31 2009 +0900
+@@ -12,6 +12,7 @@
+ # serve to show the default.
+ 
+ import sys, os
++import time
+ 
+ # If extensions (or modules to document with autodoc) are in another directory,
+ # add these directories to sys.path here. If the directory is relative to the
+@@ -38,7 +39,7 @@
+ 
+ # General information about the project.
+ project = u'Sphinx Skeleton'
+-copyright = u'2009, ENDOH takanao'
++copyright = u'%s, ENDOH takanao' % time.strftime("%Y")
+ 
+ # The version info for the project you're documenting, acts as replacement for
+ # |version| and |release|, also used in various other places throughout the
+diff -r 4239ea044049 skeleton/index.rst
+--- a/skeleton/index.rst	Sun Nov 29 09:34:19 2009 +0900
++++ b/skeleton/index.rst	Sun Nov 29 09:59:31 2009 +0900
+@@ -10,6 +10,9 @@
+ 
+ .. toctree::
+    :maxdepth: 2
++   :glob:
++
++   *
+ 
+ Indices and tables
+ ==================
