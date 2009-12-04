@@ -4,9 +4,11 @@ skeleton/_build
 tags
 
 syntax: glob
+
 *.pyc
 *.swp
 .DS_Store
+test*
 
 syntax: regexp
 

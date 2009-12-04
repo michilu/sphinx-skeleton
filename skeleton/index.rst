@@ -13,6 +13,7 @@ Contents:
    :glob:
 
    *
+   **/*
 
 Indices and tables
 ==================

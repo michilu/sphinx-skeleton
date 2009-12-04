@@ -111,5 +111,6 @@ doctest:
 serve:
 	make html
 	@echo
-	@echo "Running Server..."
+	@echo "Server starting..."
+	@echo "Serving on 0.0.0.0:$(PORT) view at http://127.0.0.1:$(PORT)/"
 	cd _build/html && python -m SimpleHTTPServer $(PORT)
