@@ -1,9 +1,11 @@
 diff -r 4239ea044049 skeleton/Makefile
 --- a/skeleton/Makefile	Sun Nov 29 09:34:19 2009 +0900
-+++ b/skeleton/Makefile	Sun Nov 29 09:59:31 2009 +0900
-@@ -12,7 +12,9 @@
++++ b/skeleton/Makefile	Tue Dec 08 09:11:29 2009 +0900
+@@ -11,8 +11,11 @@
+ PAPEROPT_a4     = -D latex_paper_size=a4
  PAPEROPT_letter = -D latex_paper_size=letter
  ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
++LANG            = ja_JP
  
 -.PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest
 +.PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest serve
@@ -12,7 +14,7 @@ diff -r 4239ea044049 skeleton/Makefile
  
  help:
  	@echo "Please use \`make <target>' where <target> is one of"
-@@ -28,6 +30,7 @@
+@@ -28,6 +31,7 @@
  	@echo "  changes   to make an overview of all changed/added/deprecated items"
  	@echo "  linkcheck to check all external links for integrity"
  	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
@@ -20,19 +22,25 @@ diff -r 4239ea044049 skeleton/Makefile
  
  clean:
  	-rm -rf $(BUILDDIR)/*
-@@ -104,3 +107,9 @@
+@@ -104,3 +108,15 @@
  	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
  	@echo "Testing of doctests in the sources finished, look at the " \
  	      "results in $(BUILDDIR)/doctest/output.txt."
 +
++pdf:
++	rst2pdf -c -s style.json -l $(LANG) -b 2 -o _build/output.pdf pdf.rst
++	@echo
++	@echo "Build finished. The PDF files are in $(BUILDDIR)."
++
 +serve:
 +	make html
 +	@echo
-+	@echo "Running Server..."
++	@echo "Server starting..."
++	@echo "Serving on 0.0.0.0:$(PORT) view at http://127.0.0.1:$(PORT)/"
 +	cd _build/html && python -m SimpleHTTPServer $(PORT)
 diff -r 4239ea044049 skeleton/conf.py
 --- a/skeleton/conf.py	Sun Nov 29 09:34:19 2009 +0900
-+++ b/skeleton/conf.py	Sun Nov 29 09:59:31 2009 +0900
++++ b/skeleton/conf.py	Tue Dec 08 09:11:29 2009 +0900
 @@ -12,6 +12,7 @@
  # serve to show the default.
  
@@ -52,14 +60,640 @@ diff -r 4239ea044049 skeleton/conf.py
  # |version| and |release|, also used in various other places throughout the
 diff -r 4239ea044049 skeleton/index.rst
 --- a/skeleton/index.rst	Sun Nov 29 09:34:19 2009 +0900
-+++ b/skeleton/index.rst	Sun Nov 29 09:59:31 2009 +0900
++++ b/skeleton/index.rst	Tue Dec 08 09:11:29 2009 +0900
 @@ -10,6 +10,9 @@
  
  .. toctree::
     :maxdepth: 2
 +   :glob:
 +
-+   *
++   sample/*
  
  Indices and tables
  ==================
+diff -r 4239ea044049 skeleton/pdf.rst
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/skeleton/pdf.rst	Tue Dec 08 09:11:29 2009 +0900
+@@ -0,0 +1,58 @@
++===========================================
++Welcome to Sphinx Skeleton's documentation!
++===========================================
++
++:著者:        `:author:, :authors:` ENDOH takanao <djmchl@gmail.com>
++:組織:        `:organization:`
++:住所:        `:address:`
++:連絡先:      `:contact:`
++:バージョン:  `:version:` 0.1
++:リビジョン:  `:revision:`
++:ステータス:  `:status:`
++:日付:        `:date:` |datetime|
++:著作権:      `:copyright:`
++
++:献辞:        `:dedication:`
++:概要:        `:abstract:`
++
++.. header::
++
++   ###Title###
++   -
++   ###Section###
++
++.. footer::
++
++   -###Page###-
++
++   |copy| Copyright 2009, ENDOH takanao.
++
++.. raw:: pdf
++
++   PageBreak oneColumn
++   SetPageCounter 1 lowerroman
++
++.. contents:: 目次
++
++.. raw:: pdf
++
++   PageBreak
++   SetPageCounter 1 arabic
++
++.. section-numbering::
++
++.. include:: sample/font.rst
++.. include:: sample/sections.rst
++.. include:: sample/annotations.rst
++.. include:: sample/aafigure.rst
++.. include:: sample/sdedit.rst
++.. include:: sample/references.rst
++
++License
++=======
++
++.. include:: ../LICENSE
++
++.. |copy| unicode:: 0xA9 .. copyright sign
++.. |datetime| date:: %Y-%m-%dT%H:%M:%M+09:00
++
+diff -r 4239ea044049 skeleton/sample
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/skeleton/sample	Tue Dec 08 09:11:29 2009 +0900
+@@ -0,0 +1,1 @@
++../sample
+\ No newline at end of file
+diff -r 4239ea044049 skeleton/style.json
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/skeleton/style.json	Tue Dec 08 09:11:29 2009 +0900
+@@ -0,0 +1,554 @@
++{
++  "embeddedFonts" : [ ],
++  "pageSetup" : {
++    "size": "A4",
++    "width": null,
++    "height": null,
++    "margin-top": "2cm",
++    "margin-bottom": "2cm",
++    "margin-left": "2cm",
++    "margin-right": "2cm",
++    "margin-gutter": "0cm",
++    "spacing-header": "5mm",
++    "spacing-footer": "5mm",
++    "firstTemplate": "coverPage"
++  },
++  "pageTemplates" : {
++    "coverPage": {
++        "frames": [
++            ["0cm", "0cm", "100%", "100%"]
++        ],
++        "showHeader" : false,
++        "showFooter" : false
++    },
++    "oneColumn": {
++        "frames": [
++            ["0cm", "0cm", "100%", "100%"]
++        ],
++        "showHeader" : true,
++        "showFooter" : true
++    },
++    "twoColumn": {
++        "frames": [
++            ["0cm", "0cm", "49%", "100%"],
++            ["51%", "0cm", "49%", "100%"]
++        ],
++        "showHeader" : true,
++        "showFooter" : true
++    },
++    "threeColumn": {
++        "frames": [
++            ["2%", "0cm", "29.333%", "100%"],
++            ["35.333%", "0cm", "29.333%", "100%"],
++            ["68.666%", "0cm", "29.333%", "100%"]
++        ],
++        "showHeader" : true,
++        "showFooter" : true
++    },
++    "cutePage": {
++        "frames": [
++            ["0%", "0%", "100%", "100%"]
++        ],
++        "showHeader" : true,
++        "showFooter" : true,
++        "defaultFooter" : "###Page###",
++        "defaultHeader" : "###Section###"
++    }
++  },
++  "fontsAlias" : {
++    "stdFont": "Helvetica",
++    "stdBold": "Helvetica-Bold",
++    "stdItalic": "Helvetica-Oblique",
++    "stdBoldItalic": "Helvetica-BoldOblique",
++    "stdSans": "Helvetica",
++    "stdSansBold": "Helvetica-Bold",
++    "stdSansItalic": "Helvetica-Oblique",
++    "stdSansBoldItalic": "Helvetica-BoldOblique",
++    "stdMono": "Courier",
++    "stdMonoItalic": "Courier-Oblique",
++    "stdMonoBold": "Courier-Bold",
++    "stdMonoBoldItalic": "Courier-BoldOblique",
++    "stdSerif": "Times-Roman"
++  },
++  "linkColor" : "navy",
++  "styles" : [
++    [ "base" , {
++      "parent": null,
++      "fontName": "stdFont",
++      "fontSize":10,
++      "leading":12,
++      "leftIndent":0,
++      "rightIndent":0,
++      "firstLineIndent":0,
++      "alignment":"TA_LEFT",
++      "spaceBefore":0,
++      "spaceAfter":0,
++      "bulletFontName":"stdFont",
++      "bulletFontSize":10,
++      "bulletIndent":0,
++      "textColor": "black",
++      "backColor": null,
++      "wordWrap": null,
++      "borderWidth": 0,
++      "borderPadding": 0,
++      "borderColor": null,
++      "borderRadius": null,
++      "allowWidows": false,
++      "allowOrphans": false,
++      "hyphenation": false,
++      "kerning": false
++    }] ,
++    ["normal" , {
++      "parent": "base"
++    }],
++    ["title_reference" , {
++      "parent": "normal",
++      "fontName": "stdItalic"
++    }],
++    ["bodytext" , {
++      "parent": "normal",
++      "spaceBefore":6,
++      "alignment": "TA_JUSTIFY",
++      "hyphenation": true
++    }],
++    ["toc" , {
++      "parent": "normal"
++    }],
++    ["blockquote" , {
++      "parent": "bodytext",
++      "leftIndent": 20
++    }],
++    ["lineblock" , {
++      "parent": "bodytext"
++    }],
++    ["toc1" , {
++      "parent": "toc",
++      "fontName": "stdBold"
++    }],
++    ["toc2" , {
++      "parent": "toc",
++      "leftIndent": 20
++    }],
++    ["toc3" , {
++      "parent": "toc",
++      "leftIndent": 40
++    }],
++    ["toc4" , {
++      "parent": "toc",
++      "leftIndent": 60
++    }],
++    ["toc5" , {
++      "parent": "toc",
++      "leftIndent": 80
++    }],
++    ["toc6" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc7" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc8" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc9" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc10" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc11" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc12" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc13" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc14" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["toc15" , {
++      "parent": "toc",
++      "leftIndent": 100
++    }],
++    ["footer" , {
++      "parent": "normal",
++      "alignment": "TA_CENTER"
++    }],
++    ["header" , {
++      "parent": "normal",
++      "alignment": "TA_CENTER"
++    }],
++    ["attribution" , {
++      "parent": "bodytext",
++      "alignment": "TA_RIGHT"
++    }],
++    ["figure" , {
++      "parent": "bodytext",
++      "alignment": "TA_CENTER"
++    }],
++    ["figure-caption" , {
++      "parent": "bodytext",
++      "fontName": "stdItalic",
++      "alignment": "TA_CENTER"
++    }],
++    ["figure-legend" , {
++      "parent": "bodytext",
++      "alignment": "TA_CENTER"
++    }],
++    ["bullet_list_item" , {
++      "parent": "bodytext"
++    }],
++    ["enumerated_list" , {
++      "parent": "bodytext",
++      "spaceBefore": 0
++    }],
++    ["enumerated_list_item" , {
++      "parent": "bodytext"
++    }],
++    ["definition_list_term" , {
++      "parent": "normal",
++      "fontName": "stdBold",
++      "spaceBefore": 4,
++      "spaceAfter": 0,
++      "keepWithNext": true
++    }],
++    ["definition_list_classifier" , {
++      "parent": "normal",
++      "fontName": "stdItalic"
++    }],
++    ["definition" , {
++      "parent": "bodytext",
++      "firstLineIndent": 0,
++      "bulletIndent": 0,
++      "spaceBefore": 0
++    }],
++    ["fieldname" , {
++      "parent": "bodytext",
++      "alignment": "TA_RIGHT",
++      "fontName": "stdBold"
++    }],
++    ["fieldvalue" , {
++      "parent": "bodytext"
++    }],
++    ["rubric" , {
++      "parent": "bodytext",
++      "textColor": "darkred",
++      "alignment": "TA_CENTER"
++    }],
++    ["italic" , {
++      "parent": "bodytext",
++      "fontName": "stdItalic"
++    }],
++    ["heading" , {
++      "parent": "normal",
++      "keepWithNext": true,
++      "spaceBefore": 12,
++      "spaceAfter": 6
++    }],
++    ["title" , {
++      "parent": "heading",
++      "fontName": "stdBold",
++      "fontSize": "200%",
++      "alignment": "TA_CENTER",
++      "keepWithNext": false,
++      "spaceAfter": 10
++    }],
++    ["subtitle" , {
++      "parent": "title",
++      "spaceBefore": 12,
++      "fontSize": "75%"
++    }],
++    ["heading1" , {
++      "parent": "heading",
++      "fontName": "stdBold",
++      "fontSize": "175%"
++    }],
++    ["heading2" , {
++      "parent": "heading",
++      "fontName": "stdBold",
++      "fontSize": "150%"
++    }],
++    ["heading3" , {
++      "parent": "heading",
++      "fontName": "stdBoldItalic",
++      "fontSize": "125%"
++    }],
++    ["heading4" , {
++      "parent": "heading",
++      "fontName": "stdBoldItalic"
++    }],
++    ["heading5" , {
++      "parent": "heading",
++      "fontName": "stdBoldItalic"
++    }],
++    ["heading6" , {
++      "parent": "heading",
++      "fontName": "stdBoldItalic"
++    }],
++    ["topic-title" , {
++      "parent": "heading3"
++    }],
++    ["sidebar-title" , {
++      "parent": "heading3"
++    }],
++    ["sidebar-subtitle" , {
++      "parent": "heading4"
++    }],
++    ["sidebar" , {
++      "float": "none",
++      "width": "100%",
++      "parent": "normal",
++      "backColor": "beige",
++      "borderColor": "darkgray",
++      "borderPadding": 8,
++      "borderWidth": 0.5
++    }],
++    ["admonition" , {
++      "parent": "normal",
++      "spaceBefore": 12,
++      "spaceAfter": 6,
++      "borderPadding": [16,16,16,16],
++      "backColor": "beige",
++      "borderColor": "darkgray",
++      "borderWidth": 0.5,
++      "commands":[
++            [ "VALIGN", [ 0, 0 ], [ -1, -1 ], "TOP" ]
++      ]
++    }],
++    ["attention" , {
++      "parent": "admonition"
++    }],
++    ["caution" , {
++      "parent": "admonition"
++    }],
++    ["danger" , {
++      "parent": "admonition"
++    }],
++    ["error" , {
++      "parent": "admonition"
++    }],
++    ["hint" , {
++      "parent": "admonition"
++    }],
++    ["important" , {
++      "parent": "admonition"
++    }],
++    ["note" , {
++      "parent": "admonition"
++    }],
++    ["tip" , {
++      "parent": "admonition"
++    }],
++    ["warning" , {
++      "parent": "admonition"
++    }],
++    ["admonition-title" , {
++      "parent": "heading3"
++    }],
++    ["admonition-heading" , {
++      "parent": "heading3"
++    }],
++    ["attention-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["caution-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["danger-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["error-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["hint-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["important-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["note-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["tip-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["warning-heading" , {
++      "parent": "admonition-heading"
++    }],
++    ["literal" , {
++      "parent": "normal",
++      "fontName": "stdMono",
++      "firstLineIndent": 0,
++      "hyphenation": false
++    }],
++    ["aafigure" , {
++      "parent": "literal"
++    }],
++    ["table" , {
++      "spaceBefore":6,
++      "spaceAfter":0,
++      "commands": [
++            [ "VALIGN", [ 0, 0 ], [ -1, -1 ], "TOP" ],
++            [ "INNERGRID", [ 0, 0 ], [ -1, -1 ], 0.25, "black" ],
++            [ "ROWBACKGROUNDS", [0, 0], [-1, -1], ["white","#E0E0E0"]],
++            [ "BOX", [ 0, 0 ], [ -1, -1 ], 0.25, "black" ]
++      ]
++    }],
++    ["table-title" , {
++      "parent" : "heading4",
++      "alignment" : "TA_CENTER"
++    }],
++    ["table-heading" , {
++      "parent" : "heading",
++      "backColor" : "beige",
++      "alignment" : "TA_CENTER",
++      "valign" : "BOTTOM",
++      "borderPadding" : 0
++    }],
++    ["dedication" , {
++      "parent" : "normal"
++    }],
++    ["abstract" , {
++      "parent" : "normal"
++    }],
++    ["contents" , {
++      "parent" : "normal"
++    }],
++    ["tableofcontents" , {
++      "parent" : "normal"
++    }],
++    ["code" , {
++      "parent": "literal",
++      "leftIndent": 0,
++      "spaceBefore": 8,
++      "spaceAfter": 8,
++      "backColor": "beige",
++      "borderColor": "darkgray",
++      "borderWidth": 0.5,
++      "borderPadding": 6
++    }],
++    ["pygments-n" , {"parent": "code"}],
++    ["pygments-nx" , {"parent": "code"}],
++    ["pygments-p" , {"parent": "code"}],
++    ["pygments-hll", {"parent": "code", "backColor": "#ffffcc"}],
++    ["pygments-c", {"textColor": "#008800", "parent": "code"}],
++    ["pygments-err", {"parent": "code"}],
++    ["pygments-k", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-o", {"textColor": "#666666", "parent": "code"}],
++    ["pygments-cm", {"textColor": "#008800", "parent": "code"}],
++    ["pygments-cp", {"textColor": "#008800", "parent": "code"}],
++    ["pygments-c1", {"textColor": "#008800", "parent": "code"}],
++    ["pygments-cs", {"textColor": "#008800", "parent": "code"}],
++    ["pygments-gd", {"textColor": "#A00000", "parent": "code"}],
++    ["pygments-ge", {"parent": "code"}],
++    ["pygments-gr", {"textColor": "#FF0000", "parent": "code"}],
++    ["pygments-gh", {"textColor": "#000080", "parent": "code"}],
++    ["pygments-gi", {"textColor": "#00A000", "parent": "code"}],
++    ["pygments-go", {"textColor": "#808080", "parent": "code"}],
++    ["pygments-gp", {"textColor": "#000080", "parent": "code"}],
++    ["pygments-gs", {"parent": "code"}],
++    ["pygments-gu", {"textColor": "#800080", "parent": "code"}],
++    ["pygments-gt", {"textColor": "#0040D0", "parent": "code"}],
++    ["pygments-kc", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-kd", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-kn", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-kp", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-kr", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-kt", {"textColor": "#00BB00", "parent": "code"}],
++    ["pygments-m", {"textColor": "#666666", "parent": "code"}],
++    ["pygments-s", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-na", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-nb", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-nc", {"textColor": "#0000FF", "parent": "code"}],
++    ["pygments-no", {"textColor": "#880000", "parent": "code"}],
++    ["pygments-nd", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-ni", {"textColor": "#999999", "parent": "code"}],
++    ["pygments-ne", {"textColor": "#D2413A", "parent": "code"}],
++    ["pygments-nf", {"textColor": "#00A000", "parent": "code"}],
++    ["pygments-nl", {"textColor": "#A0A000", "parent": "code"}],
++    ["pygments-nn", {"textColor": "#0000FF", "parent": "code"}],
++    ["pygments-nt", {"textColor": "#008000", "parent": "code"}],
++    ["pygments-nv", {"textColor": "#B8860B", "parent": "code"}],
++    ["pygments-ow", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-w", {"textColor": "#bbbbbb", "parent": "code"}],
++    ["pygments-mf", {"textColor": "#666666", "parent": "code"}],
++    ["pygments-mh", {"textColor": "#666666", "parent": "code"}],
++    ["pygments-mi", {"textColor": "#666666", "parent": "code"}],
++    ["pygments-mo", {"textColor": "#666666", "parent": "code"}],
++    ["pygments-sb", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-sc", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-sd", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-s2", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-se", {"textColor": "#BB6622", "parent": "code"}],
++    ["pygments-sh", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-si", {"textColor": "#BB6688", "parent": "code"}],
++    ["pygments-sx", {"textColor": "#008000", "parent": "code"}],
++    ["pygments-sr", {"textColor": "#BB6688", "parent": "code"}],
++    ["pygments-s1", {"textColor": "#BB4444", "parent": "code"}],
++    ["pygments-ss", {"textColor": "#B8860B", "parent": "code"}],
++    ["pygments-bp", {"textColor": "#AA22FF", "parent": "code"}],
++    ["pygments-vc", {"textColor": "#B8860B", "parent": "code"}],
++    ["pygments-vg", {"textColor": "#B8860B", "parent": "code"}],
++    ["pygments-vi", {"textColor": "#B8860B", "parent": "code"}],
++    ["pygments-il", {"textColor": "#666666", "parent": "code"}],
++
++    ["item_list", {
++      "commands": [
++            [ "VALIGN", [ 0, 0 ], [ -1, -1 ], "TOP" ],
++            [ "TOPPADDING", [ 0, 0 ], [ -1, -1 ], 0 ],
++            [ "BOTTOMPADDING", [ 0, 0 ], [ -1, -1 ], 0 ],
++            [ "RIGHTPADDING", [ 0, 0 ], [ 1, -1 ], 0 ]
++        ],
++        "colWidths": ["20pt",null]
++    }],
++    ["bullet_list", {
++      "parent": "bodytext",
++      "spaceBefore": 0,
++       "commands": [
++            [ "VALIGN", [ 0, 0 ], [ -1, -1 ], "TOP" ],
++            [ "TOPPADDING", [ 0, 0 ], [ -1, -1 ], 0 ],
++            [ "BOTTOMPADDING", [ 0, 0 ], [ -1, -1 ], 0 ],
++            [ "RIGHTPADDING", [ 0, 0 ], [ 1, -1 ], 0 ]
++        ],
++        "colWidths": ["20",null]
++    }],
++     [ "endnote", {
++         "parent": "bodytext",
++         "commands": [
++            [ "VALIGN", [ 0, 0 ], [ -1, -1 ], "TOP" ],
++            [ "TOPPADDING", [ 0, 0 ], [ -1, -1 ], 0 ],
++            [ "BOTTOMPADDING", [ 0, 0 ], [ -1, -1 ], 0 ],
++            [ "RIGHTPADDING", [ 0, 0 ], [ 1, -1 ], 0 ]
++        ],
++        "colWidths": ["3cm",null]
++    }],
++    [ "field_list", {
++         "parent": "bodytext",
++         "commands": [
++            [ "VALIGN", [ 0, 0 ], [ -1, -1 ], "TOP" ],
++            [ "TOPPADDING", [ 0, 0 ], [ -1, -1 ], 0 ]
++        ],
++        "colWidths": ["3cm",null],
++        "spaceBefore": 6
++    }],
++    [ "option_list", {
++         "commands": [
++            [ "VALIGN", [ 0, 0 ], [ -1, -1 ], "TOP" ],
++            [ "TOPPADDING", [ 0, 0 ], [ -1, -1 ], 0 ]
++        ],
++        "colWidths": [null,null]
++    }]
++  ]
++}
++

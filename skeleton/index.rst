@@ -12,8 +12,7 @@ Contents:
    :maxdepth: 2
    :glob:
 
-   *
-   **/*
+   sample/*
 
 Indices and tables
 ==================

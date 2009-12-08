@@ -11,6 +11,7 @@ BUILDDIR      = _build
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+LANG            = ja_JP
 
 .PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest serve
 
@@ -107,6 +108,11 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
+
+pdf:
+	rst2pdf -c -s style.json -l $(LANG) -b 2 -o _build/output.pdf pdf.rst
+	@echo
+	@echo "Build finished. The PDF files are in $(BUILDDIR)."
 
 serve:
 	make html
