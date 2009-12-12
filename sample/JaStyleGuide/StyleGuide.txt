@@ -1,0 +1,32 @@
+====================
+日本語スタイルガイド
+====================
+
+:著者:        Sun Microsystems, Inc.
+:組織:        Sun Microsystems, Inc.
+:連絡先:      www.sun.com
+:日付:        2009年7月
+:リビジョン:  A
+:著作権:      Sun Microsystems, Inc.
+
+.. footer::
+
+   ###Page###
+   ###Title###
+   2009年7月
+
+.. raw:: pdf
+
+   PageBreak oneColumn
+   SetPageCounter 2 arabic
+
+.. include:: copyright.rst
+
+.. contents:: 目次
+
+.. include:: intro.rst
+.. include:: section1.rst
+.. include:: section2.rst
+.. include:: sectionA.rst
+.. include:: sectionB.rst
+.. include:: sectionC.rst
