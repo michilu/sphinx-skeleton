@@ -14,6 +14,14 @@ Contents:
 
    sample/*
 
+Style Guide:
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
+   sample/StyleGuide/*
+
 Indices and tables
 ==================
 

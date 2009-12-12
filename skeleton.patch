@@ -1,6 +1,6 @@
 diff -r 4239ea044049 skeleton/Makefile
 --- a/skeleton/Makefile	Sun Nov 29 09:34:19 2009 +0900
-+++ b/skeleton/Makefile	Tue Dec 08 09:11:29 2009 +0900
++++ b/skeleton/Makefile	Sat Dec 12 18:11:23 2009 +0900
 @@ -11,8 +11,11 @@
  PAPEROPT_a4     = -D latex_paper_size=a4
  PAPEROPT_letter = -D latex_paper_size=letter
@@ -14,14 +14,18 @@ diff -r 4239ea044049 skeleton/Makefile
  
  help:
  	@echo "Please use \`make <target>' where <target> is one of"
-@@ -28,6 +31,7 @@
+@@ -28,9 +31,10 @@
  	@echo "  changes   to make an overview of all changed/added/deprecated items"
  	@echo "  linkcheck to check all external links for integrity"
  	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
 +	@echo "  serve     to run serving standalone HTML files, you can set PORT=8000 (default)"
  
  clean:
- 	-rm -rf $(BUILDDIR)/*
+-	-rm -rf $(BUILDDIR)/*
++	-rm -rf ./$(BUILDDIR)/*
+ 
+ html:
+ 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 @@ -104,3 +108,15 @@
  	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
  	@echo "Testing of doctests in the sources finished, look at the " \
@@ -40,7 +44,7 @@ diff -r 4239ea044049 skeleton/Makefile
 +	cd _build/html && python -m SimpleHTTPServer $(PORT)
 diff -r 4239ea044049 skeleton/conf.py
 --- a/skeleton/conf.py	Sun Nov 29 09:34:19 2009 +0900
-+++ b/skeleton/conf.py	Tue Dec 08 09:11:29 2009 +0900
++++ b/skeleton/conf.py	Sat Dec 12 18:11:23 2009 +0900
 @@ -12,6 +12,7 @@
  # serve to show the default.
  
@@ -60,20 +64,28 @@ diff -r 4239ea044049 skeleton/conf.py
  # |version| and |release|, also used in various other places throughout the
 diff -r 4239ea044049 skeleton/index.rst
 --- a/skeleton/index.rst	Sun Nov 29 09:34:19 2009 +0900
-+++ b/skeleton/index.rst	Tue Dec 08 09:11:29 2009 +0900
-@@ -10,6 +10,9 @@
++++ b/skeleton/index.rst	Sat Dec 12 18:11:23 2009 +0900
+@@ -10,6 +10,17 @@
  
  .. toctree::
     :maxdepth: 2
 +   :glob:
 +
 +   sample/*
++
++Style Guide:
++
++.. toctree::
++   :maxdepth: 2
++   :glob:
++
++   sample/StyleGuide/*
  
  Indices and tables
  ==================
 diff -r 4239ea044049 skeleton/pdf.rst
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/skeleton/pdf.rst	Tue Dec 08 09:11:29 2009 +0900
++++ b/skeleton/pdf.rst	Sat Dec 12 18:11:23 2009 +0900
 @@ -0,0 +1,58 @@
 +===========================================
 +Welcome to Sphinx Skeleton's documentation!
@@ -135,16 +147,17 @@ diff -r 4239ea044049 skeleton/pdf.rst
 +
 diff -r 4239ea044049 skeleton/sample
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/skeleton/sample	Tue Dec 08 09:11:29 2009 +0900
++++ b/skeleton/sample	Sat Dec 12 18:11:23 2009 +0900
 @@ -0,0 +1,1 @@
 +../sample
 \ No newline at end of file
 diff -r 4239ea044049 skeleton/style.json
 --- /dev/null	Thu Jan 01 00:00:00 1970 +0000
-+++ b/skeleton/style.json	Tue Dec 08 09:11:29 2009 +0900
-@@ -0,0 +1,554 @@
++++ b/skeleton/style.json	Sat Dec 12 18:11:23 2009 +0900
+@@ -0,0 +1,555 @@
 +{
-+  "embeddedFonts" : [ ],
++  "embeddedFonts" : [
++  ],
 +  "pageSetup" : {
 +    "size": "A4",
 +    "width": null,
@@ -201,19 +214,19 @@ diff -r 4239ea044049 skeleton/style.json
 +    }
 +  },
 +  "fontsAlias" : {
-+    "stdFont": "Helvetica",
-+    "stdBold": "Helvetica-Bold",
-+    "stdItalic": "Helvetica-Oblique",
-+    "stdBoldItalic": "Helvetica-BoldOblique",
-+    "stdSans": "Helvetica",
-+    "stdSansBold": "Helvetica-Bold",
-+    "stdSansItalic": "Helvetica-Oblique",
-+    "stdSansBoldItalic": "Helvetica-BoldOblique",
-+    "stdMono": "Courier",
-+    "stdMonoItalic": "Courier-Oblique",
-+    "stdMonoBold": "Courier-Bold",
-+    "stdMonoBoldItalic": "Courier-BoldOblique",
-+    "stdSerif": "Times-Roman"
++    "stdFont":           "IPAPMincho-Regular",
++    "stdBold":           "IPAPMincho-Regular",
++    "stdItalic":         "IPAPMincho-Regular",
++    "stdBoldItalic":     "IPAPMincho-Regular",
++    "stdSans":           "IPAPGothic-Regular",
++    "stdSansBold":       "IPAPGothic-Regular",
++    "stdSansItalic":     "IPAPGothic-Regular",
++    "stdSansBoldItalic": "IPAPGothic-Regular",
++    "stdMono":           "IPAPMincho-Regular",
++    "stdMonoItalic":     "IPAPMincho-Regular",
++    "stdMonoBold":       "IPAPMincho-Regular",
++    "stdMonoBoldItalic": "IPAPMincho-Regular",
++    "stdSerif":          "IPAPMincho-Regular"
 +  },
 +  "linkColor" : "navy",
 +  "styles" : [

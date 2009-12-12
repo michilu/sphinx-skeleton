@@ -34,7 +34,7 @@ help:
 	@echo "  serve     to run serving standalone HTML files, you can set PORT=8000 (default)"
 
 clean:
-	-rm -rf $(BUILDDIR)/*
+	-rm -rf ./$(BUILDDIR)/*
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
