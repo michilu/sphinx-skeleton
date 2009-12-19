@@ -110,7 +110,7 @@ doctest:
 	      "results in $(BUILDDIR)/doctest/output.txt."
 
 pdf:
-	rst2pdf -c -s style.json -l $(LANG) -b 2 -o _build/output.pdf pdf.rst
+	rst2pdf -c -s style.json -l $(LANG) -b 2 -o _build/StyleGuide.pdf pdf.rst
 	@echo
 	@echo "Build finished. The PDF files are in $(BUILDDIR)."
 

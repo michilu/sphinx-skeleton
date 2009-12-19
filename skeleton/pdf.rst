@@ -2,6 +2,12 @@
 Welcome to Sphinx Skeleton's documentation!
 ===========================================
 
+.. raw:: pdf
+
+   Spacer 0 450
+
+|sphinx-cover|
+
 :著者:        `:author:, :authors:` ENDOH takanao <djmchl@gmail.com>
 :組織:        `:organization:`
 :住所:        `:address:`
@@ -16,6 +22,8 @@ Welcome to Sphinx Skeleton's documentation!
 :概要:        `:abstract:`
 
 .. header::
+
+   |sphinx-2em|
 
    ###Title###
    -
@@ -55,4 +63,8 @@ License
 
 .. |copy| unicode:: 0xA9 .. copyright sign
 .. |datetime| date:: %Y-%m-%dT%H:%M:%M+09:00
+.. |sphinx-cover| image:: _static/sphinx.png
+   :align: bottom
+.. |sphinx-2em| image:: _static/Sphinx.png
+   :width: 2em
 

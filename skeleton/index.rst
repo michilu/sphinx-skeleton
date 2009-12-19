@@ -6,21 +6,13 @@
 Welcome to Sphinx Skeleton's documentation!
 ===========================================
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-   :glob:
-
-   sample/*
-
 Style Guide:
 
 .. toctree::
    :maxdepth: 2
    :glob:
 
-   sample/StyleGuide/*
+   sample/*
 
 Indices and tables
 ==================
