@@ -10,9 +10,13 @@ Style Guide:
 
 .. toctree::
    :maxdepth: 2
-   :glob:
 
-   sample/*
+   sample/font.rst
+   sample/sections.rst
+   sample/annotations.rst
+   sample/aafigure.rst
+   sample/sdedit.rst
+   sample/references.rst
 
 Indices and tables
 ==================
